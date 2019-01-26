@@ -46,24 +46,23 @@ echo; echo $Icon 'Repair Permissions :' && sleep 3
 if [[ "$OSX" -ge 9 ]]
 then echo "OSX≥10.9 > External Repair" ;
 	if test -f /usr/local/bin/RepairPermissions
-	then sudo /usr/local/bin/RepairPermissions --output /tmp/RepairPermissionsResult.txt / & cat /tmp/RepairPermissionsResult.txt
+	then sudo /usr/local/bin/RepairPermissions --output /tmp/RepairPermissionsResult.txt / && cat /tmp/RepairPermissionsResult.txt
 		else sudo mkdir -p /usr/local/bin/
 		sudo chown -R "$(whoami)" /usr/local/bin/
 		cd /tmp && curl -O https://raw.githubusercontent.com/Austere-J/RepoRepairPermissions/master/RepairPermissions3.9.3225_870c5cd76ea7c7f462a33ba574b0693a.zip
 		unzip /tmp/*.zip
 		sudo chmod 755 /tmp/RepairPermissions
 		cp -vpfr /tmp/RepairPermissions /usr/local/bin/RepairPermissions
-		sudo /usr/local/bin/RepairPermissions --output /tmp/RepairPermissionsResult.txt / & cat /tmp/RepairPermissionsResult.txt	
+		sudo /usr/local/bin/RepairPermissions --output /tmp/RepairPermissionsResult.txt / && cat /tmp/RepairPermissionsResult.txt	
 	fi
 	else echo "OSX≤10.9 > Internal Repair"
 	diskutil repairPermissions /
 fi
 
 
-if [[ "$OSX" -ge 7 ]] ; then # Exit if < 10.7
-exit
-else
-echo; echo $Icon 'Purge Old OS :' && sleep 3
+if [[ "$OSX" -ge 7 ]]
+then
+echo; echo $Icon 'Purge Old OS Classic :' && sleep 3
 rm -vrf '/System Folder'
 rm -vrf '/Applications (Mac OS 9)'
 rm -vrf '/Desktop (Mac OS 9)'
@@ -167,7 +166,7 @@ find /System/Library/Frameworks -type f -name "lsregister" -exec {} -kill -seed 
 fi
 
 
-echo; echo $Icon 'Rebuild kextcache :' && sleep 3
+echo; echo $Icon 'Touch kextcache :' && sleep 3
 sudo touch /System/Library/Extensions/
 
 
