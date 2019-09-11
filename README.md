@@ -1,5 +1,5 @@
 ## PurgeCaches OS X
-####  Mac OsX 10.6 < 10.14
+####  Mac OsX 10.6 < 10.15b
 
 #### Include :
 ```
@@ -7,6 +7,9 @@ Purge RAM
 Purge VM
 Purge DNS Cache
 Check Disk Tree
+Check Boot Disk SMART
+Check Boot Disk Previous I/O Errors
+Script Maintenance
 Repair Permissions  ( External or Internal )
 Purge Old OS Classic
 Purge Caches
