@@ -10,7 +10,7 @@ Check Disk Tree
 Check Boot Disk SMART
 Check Boot Disk Previous I/O Errors
 Script Maintenance
-Repair Permissions  ( External or Internal )
+Repair Permissions
 Purge Old OS Classic
 Purge Caches
 Purge Fonts Caches
