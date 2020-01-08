@@ -1,5 +1,5 @@
 ## PurgeCaches OS X
-####  Mac OsX 10.6 < 10.15b
+####  macOS 10.6 < 10.15
 
 #### Include :
 ```
