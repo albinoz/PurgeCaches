@@ -61,7 +61,7 @@ then echo "OSX≥10.9 > External Repair" ;
 		cd /tmp && curl -O https://raw.githubusercontent.com/Austere-J/RepoRepairPermissions/master/RepairPermissions3.9.3225_870c5cd76ea7c7f462a33ba574b0693a.zip
 		unzip /tmp/*.zip
 		sudo chmod 755 /tmp/RepairPermissions
-		cp -vpfr /tmp/RepairPermissions / /usr/local/bin/RepairPermissions
+		cp -vpfr /tmp/RepairPermissions /usr/local/bin/RepairPermissions
 		sudo /usr/local/bin/RepairPermissions --output /tmp/RepairPermissionsResult.txt ; sleep 1 & cat /tmp/RepairPermissionsResult.txt
 	fi
 	else echo "OSX≤10.9 > Internal Repair"
