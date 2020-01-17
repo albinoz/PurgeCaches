@@ -12,7 +12,7 @@ else Icon="=->" && Lock="=->" && UnLock="=->"
 fi
 
 echo "Purge Caches"
-echo "adam | 2019-10-18"
+echo "adam | 2020-01-17"
 echo "10.6 < 10.15 Tested"
 
 echo; date
@@ -62,7 +62,7 @@ then echo "OSX≥10.9 > External Repair" ;
 		unzip /tmp/*.zip
 		sudo chmod 755 /tmp/RepairPermissions
 		cp -vpfr /tmp/RepairPermissions /usr/local/bin/RepairPermissions
-		sudo /usr/local/bin/RepairPermissions --output /tmp/RepairPermissionsResult.txt ; sleep 1 & cat /tmp/RepairPermissionsResult.txt
+		sudo /usr/local/bin/RepairPermissions --repair --output /tmp/RepairPermissionsResult.txt / ; sleep 1 & cat /tmp/RepairPermissionsResult.txt
 	fi
 	else echo "OSX≤10.9 > Internal Repair"
 	diskutil repairPermissions /
