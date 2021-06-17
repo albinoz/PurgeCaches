@@ -3,22 +3,24 @@ clear
 
 ( #Logs Begin
 exec &> >(while read -r line; do echo "$(date +"[%Y-%m-%d_%H:%M:%S]") $line"; done;) #Date to Every Line
-OSX=$(sw_vers -productVersion | cut -d'.' -f2)
-if [ "$OSX" -le 6 ] ; then exit ; fi #Exit if OSX < 10.6
-if [ "$OSX" -ge 9 ] ; then #Disable Emoji if OSX < 10.9
+OSX=$(sw_vers -productVersion)
+OSXMajor=$(sw_vers -productVersion | cut -d'.' -f1)
+if [[ "$OSXMajor" -ge 11 ]]; then OSXV=$(echo "$OSXMajor"+5 | bc) ; else OSXV=$(sw_vers -productVersion | cut -d'.' -f2) ; fi
+if [ "$OSXV" -le 6 ] ; then exit ; fi #Exit if OSX < 10.6
+if [ "$OSXV" -ge 9 ] ; then #Disable Emoji if OSX < 10.9
 if date +%m | grep 12 > /dev/null ; then Icon="🎄 " ; else Icon="📌 " ; fi #Christmas
 Lock="🔒 " && UnLock="🔓 "
 else Icon="=->" && Lock="=->" && UnLock="=->"
 fi
 
 echo "Purge Caches"
-echo "adam | 2020-01-17"
-echo "10.6 < 10.15 Tested"
+echo "adam | 2021-06-17"
+echo "10.6 < 11 Tested"
 
 echo; date
 echo "$(hostname)" - "$(whoami)" - "$(sw_vers -productVersion)"
 fdesetup status
-if [ "$OSX" -ge 11 ] ; then csrutil status ; fi
+if [ "$OSXV" -ge 11 ] ; then csrutil status ; fi
 uptime
 
 echo; echo "$Icon" 'Eject Volumes'
@@ -36,7 +38,7 @@ echo; echo "$Icon" 'Check Boot Disk Tree :' && sleep 3
 sudo diskutil verifyvolume / | tee /tmp/CheckDiskTree.txt
 if cat /tmp/CheckDiskTree.txt | grep OK ; then echo Disk Tree OK ; else echo Disk Tree Error, Need Repair && exit ; fi
 
-if [ "$OSX" -ge 7 ] ; then
+if [ "$OSXV" -ge 7 ] ; then
 echo; echo "$Icon" 'Purge RAM :' && sleep 3
 sudo purge
 fi
@@ -50,9 +52,9 @@ sudo dscacheutil -flushcache
 echo; echo "$Icon" 'Script Maintenance :' && sleep 3
 sudo /usr/sbin/periodic daily weekly monthly
 
-if [ "$OSX" -le 14 ] ; then
+if [ "$OSXV" -le 14 ] ; then
 echo; echo "$Icon" 'Repair Permissions :' && sleep 3
-if [ "$OSX" -ge 9 ]
+if [ "$OSXV" -ge 9 ]
 then echo "OSX≥10.9 > External Repair" ;
 	if test -f /usr/local/bin/RepairPermissions
 	then sudo /usr/local/bin/RepairPermissions / --output /tmp/RepairPermissionsResult.txt / ; sleep 1 & cat /tmp/RepairPermissionsResult.txt
@@ -73,7 +75,7 @@ else echo && echo "$Icon" 'Bypass Repair Permissions' ; fi
 sudo chmod 1777 /private/tmp
 
 
-if [ "$OSX" -ge 7 ]
+if [ "$OSXV" -ge 7 ]
 then
 echo; echo "$Icon" 'Purge Old OS Classic :' && sleep 3
 rm -vrf '/System Folder'
@@ -179,7 +181,7 @@ sudo update_dyld_shared_cache -force -debug -root /
 
 
 echo; echo "$Icon" 'Rebuild Open With :' && sleep 3
-if [ "$OSX" -ge 7 ] ; then
+if [ "$OSXV" -ge 7 ] ; then
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
 else
 sudo find /System/Library/Frameworks -type f -name "lsregister" -exec {} -kill -seed -r \;
